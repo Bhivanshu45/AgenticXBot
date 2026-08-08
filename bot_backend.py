@@ -29,5 +29,14 @@ graph.add_edge("chat_node", END)
 chatbot = graph.compile(checkpointer=checkpointer)
 
 # chatbot.invoke
+# CONFIG = {'configurable': {'thread_id': 'thread-1'}}
+
+# response = chatbot.invoke(
+#     {'messages': [HumanMessage(content="Hello, how are you?")]},
+#     config=CONFIG,
+# )
+
+# print(chatbot.get_state(config=CONFIG).values['messages'])
 
 # stream
+
