@@ -9,7 +9,7 @@ from utils import generate_thread_id
 def reset_chat():
     thread_id = generate_thread_id()
     st.session_state['thread_id'] = thread_id
-    add_thread(st.session_state['thread_id'])
+    # add_thread(st.session_state['thread_id'])
     st.session_state['message_history'] = []
 
 
@@ -27,7 +27,12 @@ def add_thread(thread_id, name="New Chat"):
 
 def load_chat_history(thread_id):
     CONFIG = {'configurable': {'thread_id': thread_id}}
-    return chatbot.get_state(config=CONFIG).values['messages']
+    state = chatbot.get_state(config=CONFIG)
+
+    if not state.values:
+        return []
+
+    return state.values.get('messages', [])
 
 
 # ----------------- SIDEBAR -----------------

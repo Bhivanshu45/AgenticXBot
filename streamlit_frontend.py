@@ -2,6 +2,7 @@ import streamlit as st
 from bot_backend import chatbot
 from langchain_core.messages import HumanMessage
 from utils import generate_thread_id
+from sqlite_dbconfig import retrieve_all_threads
 from components.sidebar import sidebar_ui, add_thread
 
 
@@ -16,9 +17,10 @@ if 'thread_id' not in st.session_state:
     st.session_state['thread_id'] = generate_thread_id()
 
 if 'chat_threads' not in st.session_state:
-    st.session_state['chat_threads'] = []
+    all_threads = retrieve_all_threads()
+    st.session_state['chat_threads'] = all_threads
 
-add_thread(st.session_state['thread_id'])
+# add_thread(st.session_state['thread_id'])
 
 
 # ----------------- SIDEBAR -----------------
@@ -44,11 +46,10 @@ if user_input:
 
     if first_message:
 
-        for thread in st.session_state['chat_threads']:
-
-            if thread['id'] == st.session_state['thread_id']:
-                thread['name'] = user_input[:20]
-                break
+        st.session_state['chat_threads'].append({
+            'id': st.session_state['thread_id'],
+            'name': user_input[:20]
+        })
 
     # first add the message to message_history
     st.session_state['message_history'].append({
