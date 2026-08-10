@@ -61,11 +61,16 @@ if user_input:
         st.text(user_input)
 
 
+    # CONFIG = {'configurable': {'thread_id': st.session_state['thread_id']}}
+
     CONFIG = {
-        'configurable': {
-            'thread_id': st.session_state['thread_id']
-        }
+        "configurable": {'thread_id': st.session_state['thread_id']},
+        "metadata": {
+            "thread_id": st.session_state['thread_id']
+        },
+        "run_name": "chat_trun",
     }
+
 
 
     # import chatbot and stream the assistant message
